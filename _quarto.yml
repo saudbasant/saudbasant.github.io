@@ -56,7 +56,7 @@ google-analytics:
     
 format:
   html:
-    theme: flatly
+    theme: cosmo
     css: styles.css
     toc: true
     toc-expand: 1
