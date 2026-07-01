@@ -16,6 +16,22 @@
 # ──────────────────────────────────────────────────────────────────────────────
 
 # ── Peer-reviewed articles─────────────────────────────────────────────────────────────
+- title: "First Serological Evidence of Foot‐and‐Mouth Disease Virus (FMDV) Infection Among Sheep and Goats in Selected Districts of Central Bangladesh"
+  authors: "Sikder, T., Ahmed, Md. J., **Saud, B.,** Tarin, T., Hossain, Md. I., Hossen, A., Samad, M. A., Islam, M. R., Shahzad, M., Shabir, N., Kim, W., & Khatun, A."
+  corresponding: false
+  year: 2026
+  journal: "Veterinary Medicine and Science"
+  volume: "12"
+  issue: "4"
+  article: "e71066"
+  doi: "https://doi.org/10.1002/vms3.71066"
+  type: article
+  categories:
+    - Foot-and-mouth disease
+    - Serology
+    - Sheep
+    - Goat
+
 - title: "Injury patterns in cats with high-rise syndrome: A prospective case series from Central Veterinary Hospital, Dhaka, Bangladesh"
   authors: "**Saud, B.,** Biswas, L., Sikder, T., & Khatun, A."
   corresponding: true
