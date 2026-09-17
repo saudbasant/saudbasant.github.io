@@ -1,0 +1,420 @@
+---
+title: "Demographic and Socioeconomic Determinants of Contraceptive Use Among Women in Bangladesh"
+date: 2026-07-05
+description: "A capstone project completed for the GRAPH Courses R Basic and Beyond Bootcamp 2025"
+author: "Basant Saud"
+output: 
+  html_document:
+    theme: flatly
+    highlight: tango
+    toc: true
+    toc_float: true
+    bootstrap_version: 3
+    css: styles.css
+---
+
+```{r setup, include = FALSE}
+# Load required packages
+if (!require(pacman)) install.packages("pacman")
+pacman::p_load(tidyverse, 
+               here,
+               haven, 
+               janitor, 
+               esquisse, 
+               flextable, 
+               plotly,
+               gtsummary,
+               gt)
+
+#set global chunk options
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+```{css, echo=FALSE}
+/* Justify text globally */
+p, h1, h2, h3, h4, table, blockquote {
+  text-align: justify;
+}
+```
+
+### **Introduction**
+
+Access to family planning services and the ability to make informed reproductive choices are fundamental components of women’s health and autonomy. In Bangladesh, where rapid population growth and maternal health remain critical public health concerns, the use of contraceptive methods plays a pivotal role in improving maternal and child health outcomes, reducing unintended pregnancies, and supporting sustainable development goals (SDG 3.7). Despite substantial progress in contraceptive use over recent decades, disparities persist across different segments of the population, shaped by socioeconomic status, education, geographic location etc.
+
+Understanding the factors that influence contraceptive use among women is essential for designing effective family planning programs and policies. The Demographic and Health Surveys (DHS) Program assists countries worldwide in the collection and use of data to monitor and evaluate population, health, and nutrition programs.
+
+### **Objective**
+
+This capstone project aims to explore how key demographic and socioeconomic characteristics are associated with contraceptive use among Bangladeshi women of reproductive age.
+
+### **Methods**
+
+#### **Data source**
+
+The analysis utilized the Demographic and Health Surveys (DHS) dataset of Bangladesh collected from October 2017 - March 2018. The data can be found [here](https://dhsprogram.com/data/available-datasets.cfm).
+
+#### **Sample**
+
+The dataset includes 20,127 responses from women aged 15–49 years who were successfully interviewed as part of the BDHS. Only de facto residents (women who slept in the household the night before the survey) were included.
+
+#### **Data analysis**
+
+Descriptive statistics were used to summarize respondent characteristics and contraceptive use patterns. Data visualization techniques (bar plots, box plots, density plots created using ggplot2) were employed to examine in differences in contraceptive use based on different factors. All analyses were conducted using R.
+
+```{r, import_data}
+ir_bd_raw <- 
+  haven::read_dta(here("data/Bangladesh_IR7RDT/BDIR7RFL.DTA"),
+    col_select = c(
+              # Demographic predictors
+              v013, v024, v025, v130, v502,
+                    
+              # Socioeconomic Predictors
+              v106, v190, v191,
+                    
+              #Fertility Preferences and Parity
+              v218,
+              
+             # Outcome Variable (Contraceptive Use)
+              v312, v313
+                    ))
+
+```
+
+```{r, assign variable names}
+ir_bd_renamed <- 
+  ir_bd_raw %>% 
+  rename(#Demographic predictors
+         age_group = v013,
+         division = v024,
+         residence_type = v025, 
+         religion = v130,
+         currently_formerly_union =v502,
+         
+         # Socioeconomic Predictors
+         highest_educ = v106,
+         wealth_index_group = v190,
+         wealth_index = v191,
+ 
+        #Parity
+         no_of_living_children = v218,
+                               
+         # Outcome Variable (Contraceptive Use)
+         current_contraceptive_method = v312, 
+         Current_use_by_method_type = v313)
+```
+
+```{r}
+theme_set(theme_bw()) #set theme for the report
+```
+
+```{r}
+ir_bd_clean <- 
+  ir_bd_renamed %>% 
+  haven::as_factor() #convert the varibles into factors
+
+```
+
+```{r}
+#create new variable
+ir_bd_clean2 <- ir_bd_clean |> 
+  mutate(
+    contraceptive_use_status = case_when(
+      current_contraceptive_method == "not using" ~ "Not using",
+      TRUE ~ "Using"
+    ))
+  
+write_csv(ir_bd_clean2, here("data/ir_bd_clean.csv")) #save the cleaned data as .csv
+
+```
+
+### **Results**
+
+#### **Demographic and Socioeconomic Characteristics of Women**
+
+Table 1 presents the demographic and socioeconomic profile of 20,127 women. The largest age group was 25–29 years (17.75%), followed closely by those aged 20–24 years (17.46%) and 30–34 years (17.20%). Women were fairly evenly distributed across administrative divisions, with the highest representation from Dhaka (14.78%) and Chittagong (14.43%).
+
+Approximately 36.6% of the women resided in urban areas, while 63.4% were from rural settings. The majority identified as Muslim (90.1%), followed by Hindu (9.3%), with smaller proportions adhering to Buddhism, Christianity, or other religions.
+
+In terms of literacy, 62.1% could read a whole sentence, while 26.1% reported being unable to read at all. Regarding education, 38.6% had attained secondary education, 31.5% had primary education, and 15.9% reported no formal education. A total of 14.0% had achieved a higher education level.
+
+Wealth distribution was relatively even, with the richest quintile comprising 22.3% of the population and the poorest quintile accounting for 19.0%.
+
+```{r, socio_demographic information}
+ir_bd_clean2 |> 
+  select(age_group, division, residence_type, 
+         religion, highest_educ, wealth_index_group) |> 
+  tbl_summary(type = everything() ~ "categorical",
+              digits = everything() ~ 2,
+              statistic = list(all_categorical() ~ "{n} ({p}%)"),
+              label = list(
+      age_group ~ "Age Group",
+      division ~ "Division",
+      residence_type ~ "Residence Type",
+      religion ~ "Religion",
+      highest_educ ~ "Highest Education",
+      wealth_index_group ~ "Wealth Index")) |> 
+  modify_header(label = "**Variable**") |> 
+  modify_caption("Table 1. Demographic and Socioeconomic Characteristics of the Women")
+
+
+```
+
+#### **Status of contraceptive use**
+
+Overall, 58.9% of women reported currently using a contraceptive method, while 41.1% were not using any method at the time of the survey. This indicates a moderately high prevalence of contraceptive use in the study population.
+
+```{r}
+# Summarize data
+contraceptive_summary <- ir_bd_clean2 |> 
+  count(contraceptive_use_status) |> 
+  mutate(percentage = round(100 * n / sum(n), 1),
+         label = paste0(percentage, "%"))
+
+# Plot
+ggplot(data = contraceptive_summary, 
+       aes(x = contraceptive_use_status, 
+           y = n)) +
+  geom_col(color = "black",
+           fill = "#2c7fb8") +
+  geom_text(
+    aes(label = label),
+    vjust = 1.5,
+    color = "white",
+    size = 5
+  ) +  # place inside bar
+  labs(
+    title = "Figure 1. Contraceptive Use Status of Women",
+    subtitle = paste0("N = ", sum(contraceptive_summary$n)),
+    x = "Contraceptive using status",
+    y = "Number of Women"
+  ) +
+  theme(
+    plot.title = element_text(size = 12,
+                              face = "bold"),
+    axis.text = element_text(size = 11),
+    axis.title.x = element_text(size = 11),
+    axis.title.y = element_text(size = 11)
+  )
+```
+
+#### **Contraceptive using status of women currently in union**
+
+Figure 2 illustrates the distribution of contraceptive method use among women currently in union (married or living together). Modern contraceptive methods are the mostly used by the women, followed by non-use of any method. Traditional methods are used by a smaller proportion of women, while folkloric methods are rarely reported. This pattern indicates a predominance of modern contraceptive use among women in union, although a substantial segment still reports not using any contraception.
+
+```{r}
+ir_bd_clean2 |> 
+  filter(!(currently_formerly_union == "Never in union")) |> 
+  ggplot(mapping = aes(x = fct_rev(fct_infreq(Current_use_by_method_type)))) +
+  geom_bar(color = "black",
+           fill = "#2c7fb8") +
+  labs(
+    x = "Contraceptive Method Used",
+    y = "Number of Women Currently in Union",
+    caption = "Figure 2. Contraceptive method used by women currently in union" 
+  ) +
+  theme(
+    axis.text = element_text(size = 11),
+    axis.title.x = element_text(size = 11),
+    axis.title.y = element_text(size = 11),
+    plot.caption = element_text(size = 11,
+                                face = "bold",
+                                hjust = 0.5)
+  )
+```
+
+#### **Contraceptive use among different age groups**
+
+The bar chart presents the distribution of contraceptive method use across different age groups in Bangladesh. Use of modern methods is highest among women aged 30–34 and 35–39, while non-use is most prevalent among the youngest (15–19) and oldest (45–49) groups. Traditional method use increases with age, peaking in older groups, whereas folkloric methods are rarely used across all ages. These findings indicate that contraceptive use patterns vary significantly by age, with modern methods favored in mid-reproductive years and lower overall contraceptive use at the extremes of reproductive age (Figure 3).
+
+```{r}
+ggplot(ir_bd_clean2,
+       mapping = aes(x = age_group,
+                     fill = Current_use_by_method_type)) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(x = "Age group",
+       y = "Percentage",
+       fill = "Contraceptive method",
+       caption = "Figure 3. Distribution of contraceptive use among different age groups"
+       ) +
+   theme(
+    axis.text = element_text(size = 10),
+    axis.title.x = element_text(size = 11),
+    axis.title.y = element_text(size = 11),
+    plot.caption = element_text(size = 11,
+                                face = "bold",
+                                hjust = 0.5))
+```
+
+#### **Contraceptive use by education level**
+
+##### **Contraceptive method type used**
+
+The bar graph shows the distribution of current contraceptive method use among women, categorized by their education level (no education, primary, secondary, higher). Overall, the proportion of women using modern contraceptive methods increases with education level, while non-use decreases. Women with no education have the highest percentage not using any method. Folkloric methods are minimally used across all groups. Traditional method use remains fairly stable across education levels (Figure 4).
+
+```{r}
+ggplot(data = ir_bd_clean2,
+       mapping = aes(x = highest_educ,
+                     fill = Current_use_by_method_type)) + 
+  geom_bar(position = "dodge") +
+  labs(caption = "Figure 4. Variation of currently used contraceptive method type based on education level",
+       x = "Education Level", 
+       y = "Percentage of Women", 
+       fill = "Contraceptive Method Type") +
+  scale_fill_manual(values = c(
+                              "no method" = "#F8766D",
+                              "folkloric method" = "#A6D854",
+                              "traditional method" = "#00BFC4",
+                              "modern method" = "#C77CFF"
+                            )) +
+  theme(
+    axis.text = element_text(size = 11),
+    axis.title.x = element_text(size = 11),
+    axis.title.y = element_text(size = 11),
+    plot.caption = element_text(size = 11,
+                                face = "bold",
+                                hjust = 0)
+  )
+```
+
+##### **Contraceptive Method**
+
+Figure 5 illustrates the distribution of contraceptive method use by education level among women. The prevalence of non-use of contraception declines with increasing education. Women with no education had the highest proportion of non-use, while those with higher education demonstrated greater utilization of modern methods such as the pill, IUD, and condoms. Use of traditional methods (e.g., periodic abstinence and withdrawal) was more evenly distributed across all education groups. Overall, modern method use increased with education level, indicating a positive association between educational attainment and informed contraceptive choices.
+
+```{r}
+ggplot(data = ir_bd_clean2,
+       mapping = aes(x = highest_educ,
+                     fill = current_contraceptive_method)) + 
+  geom_bar(position = "fill") +
+  labs(caption = "Figure 5. Variation of currently used contraceptive method based on education level",
+       x = "Education Level", 
+       y = "Percentage of Women", 
+       fill = "Contraceptive Method Used") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(
+    axis.text = element_text(size = 11),
+    axis.title.x = element_text(size = 11),
+    axis.title.y = element_text(size = 11),
+    plot.caption = element_text(size = 11,
+                                face = "bold",
+                                hjust = 0)
+  )
+
+```
+
+#### **Contraceptive use by wealth index**
+
+Following boxplot displays the distribution of the wealth index across different categories of contraceptive method used. Women using modern and traditional contraceptive methods tend to have higher median wealth index scores compared to those using folkloric methods or no method. The wealth distribution among modern method users is notably wider, with a higher concentration of extreme positive outliers. In contrast, the wealth scores among folkloric method users are more tightly clustered around the lower end of the distribution (Figure 6). These findings suggest a positive association between socioeconomic status and the likelihood of using modern or traditional contraception.
+
+```{r}
+ggplot(ir_bd_clean2,
+       aes(y = Current_use_by_method_type,
+           x = wealth_index, 
+           fill = Current_use_by_method_type)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.25,
+              alpha = 0.2,
+              size = 0.5) +
+  scale_x_continuous(labels = scales::comma_format()) +
+  labs(caption = "Figure 6. Variation of contraceptive use by wealth index of women",
+         y = "Currently use contraceptive method",
+       x = "Wealth index") +
+    theme(
+      legend.position = "none",
+    axis.text = element_text(size = 11),
+    axis.title.x = element_text(size = 11),
+    axis.title.y = element_text(size = 11),
+    plot.caption = element_text(size = 11,
+                                face = "bold",
+                                hjust = 0.5)
+    ) 
+  
+```
+
+#### **Urban vs. Rural Differences**
+
+Figure 7. displays the distribution of contraceptive method use by place of residence (urban vs. rural) among women in Bangladesh. It highlights potential disparities in access to and preferences for family planning methods across geographic settings, which can inform targeted public health interventions. Across all method types—especially folkloric and modern methods—rural women consistently represent a larger share of users. However, urban women are relatively more likely to use modern and traditional methods compared to folkloric methods. This suggests differences in awareness, availability, or cultural attitudes toward contraception between urban and rural populations.
+
+```{r}
+ggplot(data = ir_bd_clean2,
+       mapping = aes(x = Current_use_by_method_type,
+           fill = residence_type)) + 
+  geom_bar(position = "fill") +
+    labs(caption = "Figure 7. Variation of contraceptive method used by residence of women",
+       x = "Currently used Contraceptive Method Type", 
+       y = "Percentage of Women", 
+       fill = "Residence") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(
+    axis.text = element_text(size = 11),
+    axis.title.x = element_text(size = 11),
+    axis.title.y = element_text(size = 11),
+    plot.caption = element_text(size = 11,
+                                face = "bold",
+                                hjust = 0.5)
+    )
+```
+
+#### **Variation by divisions**
+
+The following graph shows the distribution of contraceptive method use among women across the eight divisions of Bangladesh. Pills are the most widely used method in all divisions, especially in Mymensingh. Injections are the second most common method, with notable use in Khulna and Rajshahi. Other methods like female sterilization and male condoms are used to a lesser extent, while traditional methods such as withdrawal and periodic abstinence contribute modestly. Use of IUDs, implants, and emergency contraception remains minimal across all regions. Overall, modern contraceptive methods are the dominant choice nationwide, though the mix of methods varies slightly by division (Figure 8).
+
+```{r}
+ir_bd_clean2 |> 
+  filter(current_contraceptive_method != "not using") |> 
+ggplot(mapping = aes(x = division,
+           fill = current_contraceptive_method)) + 
+  geom_bar(position = "fill") +
+  labs(caption = "Figure 8. Variation of contraceptive method used by by Division",
+       x = "Division", 
+       y = "Percentage of Women", 
+       fill = "Contraceptive Method Used") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme(
+    axis.text = element_text(size = 11),
+    axis.title.x = element_text(size = 11),
+    axis.title.y = element_text(size = 11),
+    axis.text.x = element_text(angle = 35, hjust =1),
+    plot.caption = element_text(size = 11,
+                                face = "bold",
+                                hjust = 0.5)
+    
+  )
+```
+
+#### **Variations of contraceptive use by number of children**
+
+The density plot in Figure 9 illustrates the distribution of contraceptive method used by number of living children. The use of modern methods increases with the number of children, peaking around two children and remaining common up to four. Traditional and folkloric methods show a similar but less pronounced pattern. Non-use of contraception is most frequent among women with no or one child. This trend suggests a strong association between increasing number of children and the likelihood of adopting contraception, particularly modern methods in Bangladesh.
+
+```{r}
+ggplot(ir_bd_clean2,
+       mapping = aes(x = no_of_living_children,
+                     fill = Current_use_by_method_type)) +
+  geom_density(alpha = 0.4, 
+               adjust = 1, 
+               position = "identity") +
+  labs(caption = "Figure 9. Distribution of the number of living children and contraceptive use",
+       x = "Number of Living Children",
+       y = "Density",
+       fill = "Contraceptive method"
+       ) +
+   theme(
+    axis.text = element_text(size = 11),
+    axis.title.x = element_text(size = 11),
+    axis.title.y = element_text(size = 11),
+    plot.caption = element_text(size = 11,
+                                face = "bold",
+                                hjust = 0.5))
+  
+```
+
+#### **Conclusion**
+
+This analysis highlights the significant role of demographic and socioeconomic factors in shaping contraceptive use patterns among women in Bangladesh. The majority of women currently in union reported using modern contraceptive methods, with education and wealth status showing clear associations with method choice and usage. Women with higher education levels and greater wealth indices were more likely to use modern methods, while traditional and folkloric methods were more common among those with less education and fewer economic resources. These findings underscore the need for targeted family planning programs that address both informational and structural barriers to contraceptive access and choice, particularly among underserved and vulnerable populations.
+
+#### **References**
+
+1.  [R Graph courses: A Data Science Training Platform for Health Professionals](https://thegraphcourses.org/)
+2.  [The DHS Program: Demographic and Health Surveys](https://dhsprogram.com/)

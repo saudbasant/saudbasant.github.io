@@ -1,0 +1,43 @@
+---
+title: "Sequence Analysis"
+subtitle: "Guide for analyzing DNA sequences"
+description: "Today we will learn how to identify identical sequences in a FASTA file."
+author: "Basant Saud"
+date: "2026-09-17"
+categories:
+  - Linux
+  - Command Line
+  - Research Computing
+toc: true
+number-sections: true
+---
+
+### Using `seqkit` in Ubuntu
+
+First, get basic statistics:
+
+``` bash
+seqkit stats your_sequences.fasta
+```
+
+To identify duplicate sequences, use:
+
+``` bash
+seqkit rmdup -s -D duplicates.txt your_sequences.fasta -o unique_sequences.fasta
+```
+
+Here:
+
+-   `-s` = compare by **sequence**, not by sequence name
+
+-   `-D duplicates.txt` = save information about duplicate sequences
+
+-   `unique_sequences.fasta` = FASTA containing only one copy of each identical sequence
+
+-   `duplicates.txt` = information about which sequences were duplicates
+
+Then inspect:
+
+``` bash
+cat duplicates.txt
+```

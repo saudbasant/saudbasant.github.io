@@ -12,41 +12,57 @@ author-meta: "Basant saud"
 website:
   page-navigation: true
   title: "Basant saud"
-  image: "files/profiles/basant.png"
+  image: "files/profiles/basant1.webp"
   favicon: "/files/profiles/icon.png"
   description: "Academic Website for Basant saud"
 
   page-footer:
-    center: "&copy; Copyright 2026, Basant saud"
+    center: "&copy; 2026 Basant saud. Last updated: September 17, 2026"
     
   navbar:
     pinned: true
     left:
       - href: index.qmd
         text: Home
+        
       - href: about/index.qmd
         text: About
+        
       - text: Research
         menu:
           - href: research/index.qmd
             text: Overview
           - href: projects/index.qmd
             text: Projects
+            
+      - href: portfolio/index.qmd
+        text: Portfolio
+        
       - href: tutorials/index.qmd
         text: Tutorials
+        
       - href: blog/index.qmd
         text: Blog
+        
+      - text: Notes
+        menu: 
+          - href: notes/linux/
+            text: Linux
+          - href: notes/R/
+            text: R
+            
       - href: publications/index.qmd
         text: Publications
-      - text: CV
-        href: cv/
+        
+      - href: cv/
+        text: CV
+        
 
 
 # some important configs 
 site-url: "https://saudbasant.github.io/"
 search: false
 reader-mode: true
-draft-mode: unlinked
   
 # google analytics 
 google-analytics:

@@ -2,7 +2,7 @@
 title: "Basant Saud"
 subtitle: "Researcher | Veterianrian"
 description-meta: "Quarto Academic Website for Basant"
-image: files/profiles/basant.png
+image: files/profiles/basant1.webp
 page-layout: full
 toc: false
 about:

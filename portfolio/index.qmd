@@ -1,0 +1,12 @@
+---
+title: "Portfolio"
+subtitle: "Capstone Projects and Dashboards"
+listing:
+  contents:
+    - "*.qmd"
+  sort: "date desc"
+  type: grid
+  fields: [image, title, description]
+page-layout: full
+title-block-banner: true
+---

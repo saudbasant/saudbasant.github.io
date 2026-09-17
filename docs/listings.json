@@ -12,5 +12,16 @@
   {
     "listing": "/about/index.html",
     "items": []
+  },
+  {
+    "listing": "/portfolio/index.html",
+    "items": []
+  },
+  {
+    "listing": "/notes/linux/index.html",
+    "items": [
+      "/notes/linux/basics/linux-commands.html",
+      "/notes/linux/bioinformatics/nucleotide-analysis.html"
+    ]
   }
 ]

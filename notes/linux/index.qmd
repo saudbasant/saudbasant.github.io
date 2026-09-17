@@ -1,0 +1,23 @@
+---
+title: "Linux Notes"
+subtitle: "Practical Linux notes for biologists"
+page-layout: full
+
+listing:
+  id: linux-notes
+  contents:
+    - "basics/*.qmd"
+    - "shell/*.qmd"
+    - "bioinformatics/*.qmd"
+    - "wsl/*.qmd"
+  sort: "date desc"
+  type: default
+  fields:
+    - title
+    - description
+    - date
+    - categories
+  categories: true
+---
+
+A collection of practical Linux notes for research, bioinformatics, and computational biology.

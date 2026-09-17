@@ -1,0 +1,27 @@
+---
+title: "Essential Linux Commands"
+subtitle: "A practical reference for researchers and bioinformaticians"
+description: "Essential Linux commands for navigating the file system, managing files, and working from the command line."
+author: "Basant Saud"
+date: "2026-09-17"
+categories:
+  - Linux
+  - Command Line
+  - Research Computing
+toc: true
+number-sections: true
+---
+
+# Introduction
+
+The Linux command line is an essential tool for modern research computing, particularly in bioinformatics and genomics.
+
+This note contains the Linux commands that I use frequently for navigating directories, managing files, inspecting data, and working with research datasets.
+
+## 1. Navigating the File System
+
+### `pwd`
+
+Print the current working directory.
+
+
