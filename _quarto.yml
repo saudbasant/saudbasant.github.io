@@ -27,16 +27,9 @@ website:
         
       - href: about/index.qmd
         text: About
-        
-      - text: Research
-        menu:
-          - href: research/index.qmd
-            text: Overview
-          - href: projects/index.qmd
-            text: Projects
             
-      - href: portfolio/index.qmd
-        text: Portfolio
+      - href: projects/index.qmd
+        text: Projects
         
       - href: tutorials/index.qmd
         text: Tutorials

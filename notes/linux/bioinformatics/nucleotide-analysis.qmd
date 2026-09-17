@@ -41,3 +41,8 @@ Then inspect:
 ``` bash
 cat duplicates.txt
 ```
+
+It creates 2 files:
+
+1.  duplicate.txt: contains duplicate sequence names
+2.  unique_sequences.fasta: creates a fasta file with only unique sequences

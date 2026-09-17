@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Basant saud">
+<meta name="dcterms.date" content="2025-07-05">
 <meta name="description" content="Academic Website for Basant saud">
 
-<title>Linux Notes – Basant saud</title>
+<title>R Basic and Beyond Bootcamp Capstone Project 2025 – Basant saud</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -35,8 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../..//files/profiles/icon.png" rel="icon" type="image/png">
-<script src="../../site_libs/quarto-listing/list.min.js"></script>
-<script src="../../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -74,65 +73,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-linux-notes .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-description','listing-date','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-linux-notes'] = new List('listing-linux-notes', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -209,15 +150,24 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Q29tbWFuZCUyMExpbmU=">Command Line <span class="quarto-category-count">(2)</span></div><div class="category" data-category="TGludXg=">Linux <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UmVzZWFyY2glMjBDb21wdXRpbmc=">Research Computing <span class="quarto-category-count">(2)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="1">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview">Project Overview</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
+  <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools">Tools</a></li>
+  <li><a href="#report" id="toc-report" class="nav-link" data-scroll-target="#report">Report</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Linux Notes</h1>
-<p class="subtitle lead">Practical Linux notes for biologists</p>
+<h1 class="title"><strong>R Basic and Beyond Bootcamp Capstone Project 2025</strong></h1>
+<p class="subtitle lead">Demographic and Socioeconomic Determinants of Contraceptive Use Among Women in Bangladesh</p>
 </div>
 
 
@@ -225,6 +175,12 @@ window.Quarto = {
 <div class="quarto-title-meta column-page-left">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 5, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -234,68 +190,32 @@ window.Quarto = {
 </header>
 
 
-<p>A collection of practical Linux notes for research, bioinformatics, and computational biology.</p>
+<section id="project-overview" class="level2">
+<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
+<p>This is a capstone project for R Basic and Beyond Bootcamp of <a href="https://thegraphcourses.org/rbb/" target="_blank">the GRAPH Courses</a>. This project presents a reproducible analysis conducted in R, including data preparation, statistical analysis, and visualization.</p>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<ul>
+<li>Data cleaning and preprocessing</li>
+<li>Descriptive statistics</li>
+<li>Data visualization</li>
+<li>Reproducible R workflow</li>
+</ul>
+</section>
+<section id="tools" class="level2">
+<h2 class="anchored" data-anchor-id="tools">Tools</h2>
+<p><code>R</code> · <code>RStudio</code> · <code>tidyverse</code> · <code>ggplot2</code> · <code>dplyr</code></p>
+</section>
+<section id="report" class="level2">
+<h2 class="anchored" data-anchor-id="report">Report</h2>
+<p>The complete analysis is available as a rendered HTML report.</p>
+<p><a href="capstone.html" target="_blank"><strong>View the full analysis →</strong></a></p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-linux-notes">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="TGludXglMkNDb21tYW5kJTIwTGluZSUyQ1Jlc2VhcmNoJTIwQ29tcHV0aW5n" data-listing-date-sort="1789581600000" data-listing-file-modified-sort="1789643717191" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="48">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../../notes/linux/basics/linux-commands.html" class="no-external">Essential Linux Commands</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGludXg='); return false;">Linux</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29tbWFuZCUyMExpbmU='); return false;">Command Line</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UmVzZWFyY2glMjBDb21wdXRpbmc='); return false;">Research Computing</div>
-
-</div>
-<div class="delink listing-description"><a href="../../notes/linux/basics/linux-commands.html" class="no-external">
-<p>Essential Linux commands for navigating the file system, managing files, and working from the command line.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../../notes/linux/basics/linux-commands.html" class="no-external">
-<div class="listing-date">
-Sep 17, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="TGludXglMkNDb21tYW5kJTIwTGluZSUyQ1Jlc2VhcmNoJTIwQ29tcHV0aW5n" data-listing-date-sort="1789581600000" data-listing-file-modified-sort="1789646223933" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="85">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../../notes/linux/bioinformatics/nucleotide-analysis.html" class="no-external">Sequence Analysis</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGludXg='); return false;">Linux</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29tbWFuZCUyMExpbmU='); return false;">Command Line</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UmVzZWFyY2glMjBDb21wdXRpbmc='); return false;">Research Computing</div>
-
-</div>
-<div class="delink listing-description"><a href="../../notes/linux/bioinformatics/nucleotide-analysis.html" class="no-external">
-<p>Today we will learn how to identify identical sequences in a FASTA file.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../../notes/linux/bioinformatics/nucleotide-analysis.html" class="no-external">
-<div class="listing-date">
-Sep 17, 2026
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

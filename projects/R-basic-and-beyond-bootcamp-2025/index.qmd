@@ -1,0 +1,28 @@
+---
+title: "**R Basic and Beyond Bootcamp Capstone Project 2025**"
+subtitle: "Demographic and Socioeconomic Determinants of Contraceptive Use Among Women in Bangladesh"
+date: 2025-07-05
+image: "figures/image.png"
+page-layout: full
+---
+
+## Project Overview
+
+This is a capstone project for R Basic and Beyond Bootcamp of [the GRAPH Courses](https://thegraphcourses.org/rbb/){target="_blank"}. This project presents a reproducible analysis conducted in R, including data preparation, statistical analysis, and visualization.
+
+## Methods
+
+-   Data cleaning and preprocessing
+-   Descriptive statistics
+-   Data visualization
+-   Reproducible R workflow
+
+## Tools
+
+`R` · `RStudio` · `tidyverse` · `ggplot2` · `dplyr`
+
+## Report
+
+The complete analysis is available as a rendered HTML report.
+
+[**View the full analysis →**](capstone.html){target="_blank"}

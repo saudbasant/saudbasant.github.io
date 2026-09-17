@@ -1,6 +1,15 @@
 ---
-title: "index"
-format: html
----
+title: "Projects"
+page-layout: full
 
-Projects page under construction.
+listing:
+  contents:
+    - "R-basic-and-beyond-bootcamp-2025"
+  type: grid
+  sort: "date desc"
+  fields:
+    - image
+    - title
+    - description
+  image-height: 200px
+---

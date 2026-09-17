@@ -36,8 +36,8 @@ about:
 ---
 
 ::: {#hero-heading}
-I am Basant Saud, a **Veterinary science** graduate. Currently, I am MS student in the [department of Pathology](https://sau.edu.bd/department/pathology){target="_blank"}, [Sher-e-Bangla Agricultural University](https://sau.edu.bd/){target="_blank"}, Bangladesh and Research assistant in the lab of [Amina Khatun, PhD](https://sau.edu.bd/teacher/261){target="_blank"}.
+I am Basant Saud, an **Animal Science and Veterinary Medicine** graduate with MS in **Veterinary Pathology**. Currently, I am a Research Assistant in the the lab of [Amina Khatun, PhD,](https://sau.edu.bd/teacher/261){target="_blank"} [Department of Pathology](https://sau.edu.bd/department/pathology){target="_blank"}, [Sher-e-Bangla Agricultural University](https://sau.edu.bd/){target="_blank"}, Bangladesh.
 
-My research interests are Virology, Immunology, Molecular Epidemiology, Genomics, Transcriptomics, Zoonoses and One health.
+My research interests are Virology, Immunology, Epidemiology, Multiomics, Zoonoses and One health.
 
 :::

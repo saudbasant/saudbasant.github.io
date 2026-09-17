@@ -23,5 +23,11 @@
       "/notes/linux/basics/linux-commands.html",
       "/notes/linux/bioinformatics/nucleotide-analysis.html"
     ]
+  },
+  {
+    "listing": "/projects/index.html",
+    "items": [
+      "/projects/R-basic-and-beyond-bootcamp-2025/index.html"
+    ]
   }
 ]
