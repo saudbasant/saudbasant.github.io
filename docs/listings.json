@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/tutorials/obsidian/index.html",
+    "items": [
+      "/tutorials/obsidian/Customization/scholar-citation-popover.html"
+    ]
+  },
+  {
     "listing": "/tutorials/linux/index.html",
     "items": [
       "/tutorials/linux/basics/linux-commands.html",
@@ -25,11 +31,5 @@
   {
     "listing": "/publications/index.html",
     "items": []
-  },
-  {
-    "listing": "/tutorials/Obsidian/index.html",
-    "items": [
-      "/tutorials/Obsidian/Customization/scholar-citation-popover.html"
-    ]
   }
 ]
