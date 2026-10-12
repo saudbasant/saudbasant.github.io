@@ -1,0 +1,569 @@
+---
+title: "Setting Up Google Scholar Citation Popovers in Obsidian PDF++"
+description: "A step-by-step guide to enabling Google Scholar-style citation popovers in Obsidian using a modified PDF++ build, Surfing, and Obsidian Scholar on Windows."
+date: 2026-10-12
+categories:
+  - Obsidian
+  - Research Workflow
+  - Productivity
+  - Tutorials
+toc: true
+toc-depth: 3
+number-sections: true
+---
+
+# Overview
+
+While reading academic papers, it is useful to inspect a cited reference without leaving the PDF or manually searching for the reference in a bibliography. Google's PDF viewer offers a convenient citation popover that displays reference information and provides access to Google Scholar.
+
+Obsidian can provide a similar experience through a modified version of the [PDF++](https://github.com/ryotaushio/obsidian-pdf-plus) plugin, together with [Surfing](https://github.com/Quorafind/Obsidian-Surfing) and [Obsidian Scholar](https://github.com/lolipopshock/obsidian-scholar).
+
+This tutorial documents how I configured this workflow on Windows, including the source-code modifications required to make the modified PDF++ build work in my environment.
+
+## What the completed setup provides
+
+After completing the setup, hovering over a supported citation link in a PDF displays a popover containing bibliographic information and buttons such as:
+
+-   **Google Scholar** — access the corresponding Google Scholar search.
+-   **Search with Scholar** — search for the paper using the Obsidian Scholar integration.
+-   **Open the paper in your Scholar library**, when available through the Scholar integration.
+
+The exact buttons and available information depend on the citation, the plugins, and the metadata that can be retrieved.
+
+## How the components work together
+
+| Component | Purpose |
+|------------------------------------|------------------------------------|
+| Obsidian | Provides the research-note and PDF-reading environment. |
+| PDF++ | Adds PDF annotation, internal-link handling, and citation-popover functionality. |
+| Modified PDF++ branch | Adds the experimental citation integration and Google Scholar popover option used in this tutorial. |
+| Surfing | Provides the hover infrastructure required by the Google Scholar popover. |
+| Obsidian Scholar | Adds search and library-integration features to supported bibliography popovers. |
+| Node.js and pnpm | Install development dependencies and compile the modified plugin from source. |
+
+**Important:** This tutorial describes a modified, experimental plugin build. It is not a guarantee that the same modifications will be needed—or remain compatible—in future versions of Obsidian or PDF++.
+
+# 1. Prerequisites
+
+Before starting, make sure you have:
+
+-   [Obsidian](https://obsidian.md/) installed.
+-   A vault in which you can install community plugins.
+-   [Node.js](https://nodejs.org/) installed.
+-   [pnpm](https://pnpm.io/) installed.
+-   A code editor, such as [Visual Studio Code](https://code.visualstudio.com/).
+-   Basic familiarity with navigating folders and running commands in PowerShell.
+
+This tutorial was tested on Windows using Obsidian 1.14.4, Surfing 0.9.14, and a modified PDF++ build based on version 0.40.30. Your versions may differ.
+
+## 1.1. Check Node.js
+
+Open PowerShell and run:
+
+``` powershell
+node -v
+npm.cmd -v
+```
+
+Both commands should return version numbers.
+
+If Node.js is not installed, install it from the official Node.js website and reopen PowerShell.
+
+## 1.2. Install pnpm
+
+If pnpm is not installed, run:
+
+``` powershell
+npm.cmd install -g pnpm
+```
+
+Check the installation:
+
+``` powershell
+pnpm.cmd -v
+```
+
+On my Windows system, PowerShell did not recognize the regular `npm` or `pnpm` commands because of script execution restrictions. Using the `.cmd` executable worked.
+
+For that reason, the commands in this tutorial use `pnpm.cmd` where appropriate.
+
+# 2. Install the required Obsidian plugins
+
+Open Obsidian and navigate to **Settings → Community plugins → Browse**.
+
+Install and enable the following plugins.
+
+## 2.1. PDF++
+
+Install [PDF++](https://github.com/ryotaushio/obsidian-pdf-plus).
+
+PDF++ is the main PDF annotation plugin. The modified build used here adds the citation-popover settings required for this workflow.
+
+## 2.2. Surfing
+
+Install [Surfing](https://github.com/Quorafind/Obsidian-Surfing) and enable it.
+
+The modified PDF++ code specifies Surfing version 0.9.9 or higher as a requirement for the Google Scholar popover. In my setup, Surfing 0.9.14 was installed and enabled.
+
+## 2.3. Obsidian Scholar
+
+Install [Obsidian Scholar](https://github.com/lolipopshock/obsidian-scholar) and enable it.
+
+The Scholar integration adds search and library-related buttons to supported bibliography popovers.
+
+The Scholar plugin is distinct from the PDF++ Google Scholar popover option: installing Scholar alone does not enable that option.
+
+# 3. Download the modified PDF++ source
+
+The implementation used in this tutorial is based on the `add-scholar-support` branch of the modified PDF++ repository.
+
+**Source repository:** [lolipopshock/obsidian-pdf-plus — add-scholar-support](https://github.com/lolipopshock/obsidian-pdf-plus/tree/add-scholar-support)
+
+## 3.1. Download the branch
+
+1.  Open the modified repository using the link above.
+2.  Select the branch named `add-scholar-support`.
+3.  Open the repository's **Code** menu.
+4.  Select **Download ZIP**.
+5.  Extract the ZIP archive to your Downloads folder.
+
+The extracted folder should contain files such as `package.json`, `esbuild.config.mjs`, and a `src` directory.
+
+In my setup, the extracted source directory was:
+
+``` text
+C:\Users\Acer\Downloads\
+  obsidian-pdf-plus-add-scholar-support (1)\
+  obsidian-pdf-plus-add-scholar-support\
+```
+
+Your path may differ. The important point is to open the project root—the directory containing `package.json`—rather than the `src` subdirectory.
+
+# 4. Inspect the modified source code
+
+Initially, I copied the modified build into Obsidian, but the expected citation settings were missing. The developer console also showed errors involving `hoverLinkSources`, `pdf-plus`, and `pdf-plus-citation-link`.
+
+The source code needed two small compatibility adjustments before it could be built successfully in my environment.
+
+**Before editing source files, keep an untouched copy of the downloaded project.** These changes are specific to the source version used in this tutorial and should not be applied blindly to unrelated PDF++ versions.
+
+## 4.1. Fix the hover-link setting in `src/settings.ts`
+
+Open the project in Visual Studio Code.
+
+Navigate to:
+
+``` text
+src/settings.ts
+```
+
+Search for:
+
+``` typescript
+addRequireModKeyOnHoverSetting(id: string)
+```
+
+In the function, locate the line that reads:
+
+``` typescript
+const display = this.app.workspace.hoverLinkSources[id].display;
+```
+
+Replace that line with:
+
+``` typescript
+const display =
+    this.app.workspace.hoverLinkSources?.[id]?.display ?? id;
+```
+
+The relevant function should then resemble:
+
+``` typescript
+addRequireModKeyOnHoverSetting(id: string) {
+    const display =
+        this.app.workspace.hoverLinkSources?.[id]?.display ?? id;
+
+    const required = this.plugin.requireModKeyForLinkHover(id);
+
+    return this.addSetting()
+        .setName(`Require ${modKey} key while hovering`)
+        .setDesc(
+            `Currently ${required ? 'required' : 'not required'}.`
+        );
+}
+```
+
+The snippet above illustrates the changed line and surrounding logic; preserve the original function's remaining code, including its existing variable names and method calls.
+
+### Why this change is needed
+
+The original expression assumes that `hoverLinkSources[id]` always exists. If the requested entry is missing, accessing `.display` throws a JavaScript error.
+
+Optional chaining prevents that particular failure and uses `id` as a fallback display value.
+
+## 4.2. Fix `requireModKeyForLinkHover` in `src/main.ts`
+
+Open:
+
+``` text
+src/main.ts
+```
+
+Search for:
+
+``` typescript
+requireModKeyForLinkHover
+```
+
+In the source version used here, the function originally resembled:
+
+``` typescript
+requireModKeyForLinkHover(id = 'pdf-plus') {
+    // @ts-ignore
+    return this.app.internalPlugins.plugins['page-preview'].instance.overrides[id]
+        ?? this.app.workspace.hoverLinkSources[id]?.defaultMod
+        ?? false;
+}
+```
+
+Replace the entire function with:
+
+``` typescript
+requireModKeyForLinkHover(id = 'pdf-plus') {
+    const pagePreview =
+        this.app.internalPlugins.plugins['page-preview']?.instance as any;
+
+    const overrides = pagePreview?.overrides;
+
+    return (
+        overrides?.[id]
+        ?? this.app.workspace.hoverLinkSources?.[id]?.defaultMod
+        ?? false
+    );
+}
+```
+
+Save the file.
+
+### Why this change is needed
+
+The original function assumes that the internal `page-preview` plugin instance and its `overrides` property exist. The modified function checks for their presence before accessing them.
+
+The `as any` cast is used because the Obsidian type definitions available to this project do not declare the `overrides` property on that internal plugin instance.
+
+This is a compatibility workaround, not a guarantee that Obsidian's internal API will remain stable.
+
+# 5. Install dependencies and build the plugin
+
+The next step is to compile the modified TypeScript source into the JavaScript file loaded by Obsidian.
+
+## 5.1. Open PowerShell in the project root
+
+Open PowerShell in the directory containing `package.json`.
+
+For my setup, the command was:
+
+``` powershell
+cd "C:\Users\Acer\Downloads\obsidian-pdf-plus-add-scholar-support (1)\obsidian-pdf-plus-add-scholar-support"
+```
+
+Confirm that you are in the correct directory:
+
+``` powershell
+Get-ChildItem package.json
+```
+
+If the file is found, continue.
+
+## 5.2. Install project dependencies
+
+Run:
+
+``` powershell
+pnpm.cmd install
+```
+
+This installs the dependencies declared by the project.
+
+During my setup, pnpm displayed a warning about ignored build scripts for dependencies, including Electron and esbuild. If the installation displays an `ERR_PNPM_IGNORED_BUILDS` message, follow the instructions shown by your installed pnpm version.
+
+In my case, I ran:
+
+``` powershell
+pnpm.cmd approve-builds
+```
+
+I reviewed the listed packages and approved the necessary build scripts for this project, including esbuild and Electron when prompted. I then reran:
+
+``` powershell
+pnpm.cmd install
+```
+
+**Security note:** Do not automatically approve every package in an unfamiliar project. Review the packages and their purpose before allowing install scripts to execute.
+
+## 5.3. Build the modified plugin
+
+After installing dependencies and applying both source changes, run:
+
+``` powershell
+pnpm.cmd build
+```
+
+The project runs a command equivalent to:
+
+``` text
+tsc -noEmit -skipLibCheck && node esbuild.config.mjs production
+```
+
+A successful build should return to the PowerShell prompt without a TypeScript or bundling error.
+
+### Common build error
+
+During my first patched build, TypeScript reported:
+
+``` text
+error TS2339: Property 'overrides' does not exist
+```
+
+The fix was to cast the internal page-preview instance to `any`, as shown in Section 4.2.
+
+After applying that change, the build succeeded.
+
+If your build produces a different error, do not assume that the same patch will resolve it. Inspect the new error and compare it with the source version you downloaded.
+
+# 6. Install the rebuilt plugin into Obsidian
+
+Once the build succeeds, locate the generated `main.js` in the project root.
+
+In my setup, the active vault's plugin directory was:
+
+``` text
+C:\Users\Acer\Documents\Obsidian\.obsidian\plugins\pdf-plus
+```
+
+Your vault may use a different location. The correct directory is the active vault's `.obsidian/plugins/pdf-plus` folder.
+
+## 6.1. Back up the existing plugin
+
+Before replacing any files:
+
+1.  Close Obsidian.
+2.  Open the active vault's `pdf-plus` plugin folder.
+3.  Make a backup of the existing `main.js`.
+4.  Keep a copy of the modified source project.
+
+These backups allow you to recover if the rebuilt plugin does not work.
+
+## 6.2. Copy the rebuilt `main.js`
+
+Copy the newly generated file:
+
+``` text
+<project-root>\main.js
+```
+
+into:
+
+``` text
+<vault>\.obsidian\plugins\pdf-plus\main.js
+```
+
+Replace the existing `main.js`.
+
+In my successful setup, I replaced `main.js` and left the existing `manifest.json`, `styles.css`, and plugin data unchanged.
+
+Avoid copying files into a similarly named folder belonging to another vault. Also avoid allowing an ordinary PDF++ update to overwrite the modified build before backing it up.
+
+## 6.3. Reload Obsidian
+
+Open Obsidian again.
+
+You can use the Command Palette (`Ctrl + P`) to find **Reload app**, if needed.
+
+After reloading, open **Settings → PDF++**.
+
+# 7. Configure citation popovers
+
+After installing the rebuilt plugin, the citation settings should be available in PDF++ settings.
+
+## 7.1. Locate the citation section
+
+Navigate to:
+
+**Settings → Community plugins → PDF++**
+
+Find the heading:
+
+**Citations in PDF (experimental)**
+
+Under this section, look for the dropdown:
+
+**Hover (+ modifier key) on a citation link to show…**
+
+The available options in the modified source include:
+
+-   **Same as other internal links**
+-   **PDF++'s custom bibliography popover**
+-   **Google Scholar popover**
+
+Choose:
+
+**Google Scholar popover**
+
+The exact capitalization and wording may vary slightly by source version.
+
+## 7.2. Confirm the plugin requirements
+
+Check that:
+
+-   PDF++ is enabled.
+-   Surfing is enabled and meets the modified build's version requirement.
+-   Obsidian Scholar is enabled if you want its additional search and library buttons.
+
+The Google Scholar popover requires Surfing according to the modified branch's settings description. Obsidian Scholar is used for the additional Scholar integration.
+
+## 7.3. Understand the modifier key
+
+The setting name mentions a modifier key because citation popovers are triggered by hovering with the configured modifier-key behavior.
+
+If simply hovering over a citation does not open the popover, read the description underneath the setting and test the indicated modifier key while hovering over the citation.
+
+Do not confuse this feature with PDF++'s separate **Backlink highlighting** settings. The option named *Action when hovering over highlighted text* controls backlink behavior and is not the citation-popover setting.
+
+# 8. Test the workflow on a research paper
+
+Open an academic PDF containing internal links from in-text citations to bibliography entries.
+
+For example, a paper might contain a citation such as `[22]` or `[23]`.
+
+1.  Open the PDF in Obsidian's PDF viewer.
+2.  Move the pointer over an in-text citation.
+3.  Hold the configured modifier key if required.
+4.  Wait for the citation popover.
+5.  Confirm that it displays bibliographic information.
+6.  Test the Google Scholar button.
+7.  If Obsidian Scholar is enabled, test the Scholar search or library-related button.
+
+A successful popover should resemble the Google Scholar-style citation preview, rather than merely navigating to the bibliography entry.
+
+The result depends on the PDF's internal link structure. Not every PDF has citation links that the modified plugin can recognize.
+
+# 9. Troubleshooting
+
+## 9.1. The citation setting is missing
+
+First, confirm that you installed the rebuilt `main.js` into the correct active vault's plugin folder.
+
+Then:
+
+1.  Reload Obsidian.
+2.  Open **Settings → PDF++**.
+3.  Search the settings for `citation`.
+4.  Look for **Citations in PDF (experimental)**.
+
+If the section remains missing, open Developer Tools with `Ctrl + Shift + I` and inspect the Console for errors related to PDF++.
+
+In my setup, the settings page initially failed because the modified code accessed a missing `hoverLinkSources` entry. The first source patch in Section 4.1 addresses that specific failure.
+
+## 9.2. The build fails with a TypeScript error about `overrides`
+
+If the build reports that `overrides` does not exist on the declared type for the `page-preview` plugin, check that the function in `src/main.ts` matches the patched version in Section 4.2.
+
+Save the file and rerun:
+
+``` powershell
+pnpm.cmd build
+```
+
+If the error is different, inspect that error rather than repeatedly applying the same patch.
+
+## 9.3. The citation popover still does not appear
+
+Check the following:
+
+-   You replaced the correct `main.js`.
+-   Obsidian was reloaded after the replacement.
+-   The modified PDF++ build is enabled.
+-   Surfing is enabled.
+-   The citation-hover dropdown is set to **Google Scholar popover**.
+-   You are hovering over a supported citation link, not ordinary text.
+-   You are using the modifier key indicated by the setting.
+
+If the problem persists, inspect the Developer Tools Console for a new error. Avoid changing unrelated settings or deleting plugin data without a backup.
+
+## 9.4. The popover appears, but the buttons do not work as expected
+
+The citation popover and the Obsidian Scholar integration are related but distinct features.
+
+Confirm that Obsidian Scholar is enabled if you expect its search or library buttons. Also check whether the particular citation has enough bibliographic information to identify the paper.
+
+The presence of a button does not guarantee that a paper will be found or that it is already in your library.
+
+## 9.5. A plugin update breaks the setup
+
+An official PDF++ update may replace the modified `main.js`. Keep the following files and folders backed up:
+
+-   The working `main.js`.
+-   The modified source project.
+-   Your source-code changes.
+-   The plugin's existing settings and data.
+
+After an update, verify the plugin version and compatibility before reapplying an old compiled file. Rebuild the source against the intended version rather than assuming that an old bundle will work with a newer Obsidian release.
+
+# 10. Maintenance and reproducibility
+
+Because this setup relies on a modified source branch, it is worth recording the version and changes used.
+
+Keep a short maintenance record containing:
+
+| Item                           | Record                           |
+|--------------------------------|----------------------------------|
+| Modified repository            | `lolipopshock/obsidian-pdf-plus` |
+| Branch                         | `add-scholar-support`            |
+| Base PDF++ version in my setup | 0.40.30                          |
+| Surfing version in my setup    | 0.9.14                           |
+| Obsidian version in my setup   | 1.14.4                           |
+| Source files modified          | `src/settings.ts`, `src/main.ts` |
+| Build command                  | `pnpm.cmd build`                 |
+| Installed output               | `main.js`                        |
+
+The repository and plugin may evolve, so check the current branch and source before reproducing the procedure on a future installation.
+
+For a more reproducible setup, preserve the downloaded source archive and record the commit hash of the exact source revision you built. A branch name alone can point to different commits over time.
+
+# 11. Final checklist
+
+Use this checklist when repeating the setup on another machine.
+
+-   [ ] Install Node.js and pnpm.
+-   [ ] Install and enable PDF++, Surfing, and Obsidian Scholar.
+-   [ ] Download and extract the modified `add-scholar-support` source branch.
+-   [ ] Open the project root containing `package.json`.
+-   [ ] Apply the compatibility change in `src/settings.ts`.
+-   [ ] Apply the compatibility change in `src/main.ts`.
+-   [ ] Run `pnpm.cmd install`.
+-   [ ] Approve required dependency build scripts only after reviewing them.
+-   [ ] Run `pnpm.cmd build`.
+-   [ ] Back up the existing PDF++ `main.js`.
+-   [ ] Copy the newly generated `main.js` into the active vault's `pdf-plus` plugin folder.
+-   [ ] Reload Obsidian.
+-   [ ] Open PDF++ settings and choose **Google Scholar popover**.
+-   [ ] Test the popover on a PDF with linked in-text citations.
+-   [ ] Back up the working source and compiled file.
+
+# Conclusion
+
+This setup brings a Google Scholar-style citation-preview workflow into Obsidian, making it easier to inspect references while reading academic papers.
+
+The most important lesson from the troubleshooting process is that installing the required plugins was only part of the solution. The modified PDF++ source also needed small compatibility changes before it could build and expose the citation settings correctly.
+
+Once configured, the workflow can be used alongside Obsidian literature notes, PDF annotations, and other research-management tools to make academic reading more efficient.
+
+**Sources and project links**
+
+-   [PDF++ — original repository](https://github.com/ryotaushio/obsidian-pdf-plus)
+-   [Modified PDF++ — add-scholar-support branch](https://github.com/lolipopshock/obsidian-pdf-plus/tree/add-scholar-support)
+-   [Obsidian Scholar](https://github.com/lolipopshock/obsidian-scholar)
+-   [Surfing](https://github.com/Quorafind/Obsidian-Surfing)
+-   [Node.js](https://nodejs.org/)
+-   [pnpm](https://pnpm.io/)

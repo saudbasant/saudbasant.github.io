@@ -1,0 +1,18 @@
+---
+title: "Obsidian"
+subtitle: "Effective Note Taking for Researcher"
+page-layout: full
+
+listing:
+  id: obsidian
+  sort: "date desc"
+  type: default
+  fields:
+    - title
+    - description
+    - date
+    - categories
+  categories: true
+---
+
+Tips and tutorials for Obsidian.

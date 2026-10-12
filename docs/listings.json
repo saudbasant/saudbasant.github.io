@@ -29,5 +29,22 @@
     "items": [
       "/projects/R-basic-and-beyond-bootcamp-2025/index.html"
     ]
+  },
+  {
+    "listing": "/notes/Obsidian/index.html",
+    "items": []
+  },
+  {
+    "listing": "/tutorials/linux/index.html",
+    "items": [
+      "/tutorials/linux/basics/linux-commands.html",
+      "/tutorials/linux/bioinformatics/nucleotide-analysis.html"
+    ]
+  },
+  {
+    "listing": "/tutorials/Obsidian/index.html",
+    "items": [
+      "/tutorials/Obsidian/Customization/scholar-citation-popover.html"
+    ]
   }
 ]

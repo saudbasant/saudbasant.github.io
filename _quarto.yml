@@ -17,7 +17,7 @@ website:
   description: "Academic Website for Basant saud"
 
   page-footer:
-    center: "&copy; 2026 Basant saud. Last updated: September 17, 2026"
+    center: "&copy; 2026 Basant saud. Last updated: October 12, 2026"
     
   navbar:
     pinned: true
@@ -31,18 +31,17 @@ website:
       - href: projects/index.qmd
         text: Projects
         
-      - href: tutorials/index.qmd
-        text: Tutorials
-        
       - href: blog/index.qmd
         text: Blog
         
-      - text: Notes
+      - text: Tutorials
         menu: 
-          - href: notes/linux/
+          - href: tutorials/linux/
             text: Linux
-          - href: notes/R/
+          - href: tutorials/R/
             text: R
+          - href: tutorials/obsidian/
+            text: Obsidian
             
       - href: publications/index.qmd
         text: Publications
