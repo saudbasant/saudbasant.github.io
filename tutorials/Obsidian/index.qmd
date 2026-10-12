@@ -1,10 +1,13 @@
 ---
 title: "Obsidian"
-subtitle: "Effective Note Taking for Researcher"
+subtitle: "Effective Note Taking for Researchers"
 page-layout: full
 
 listing:
   id: obsidian
+  contents: 
+    - "**/*.qmd"
+    - "!index.qmd"
   sort: "date desc"
   type: default
   fields:
@@ -15,4 +18,4 @@ listing:
   categories: true
 ---
 
-Tips and tutorials for Obsidian.
+Explore tutorials on customizing Obsidian, managing plugins, and building an efficient research workflow.
