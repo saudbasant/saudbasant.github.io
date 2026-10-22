@@ -1,6 +1,7 @@
 project:
   type: website
   output-dir: docs
+  pre-render: "Rscript scripts/update-home-news.R"
   render:
     - "**/*.qmd"
     - "!academic-cv/"
@@ -11,13 +12,13 @@ author-meta: "Basant saud"
 
 website:
   page-navigation: true
-  title: "Basant saud"
+  title: "**Basant saud**"
   image: "files/profiles/basant1.webp"
   favicon: "/files/profiles/icon.png"
   description: "Academic Website for Basant saud"
 
   page-footer:
-    center: "&copy; 2026 Basant saud. Last updated: October 12, 2026"
+    center: "&copy; 2026 Basant saud. Last updated: October 22, 2026"
     
   navbar:
     pinned: true
@@ -31,6 +32,12 @@ website:
       - href: projects/index.qmd
         text: Projects
         
+      - href: publications/index.qmd
+        text: Publications
+
+      - href: news/index.qmd
+        text: News
+        
       - href: blog/index.qmd
         text: Blog
         
@@ -43,11 +50,9 @@ website:
           - href: tutorials/obsidian/
             text: Obsidian
             
-      - href: publications/index.qmd
-        text: Publications
-        
       - href: cv/
         text: CV
+        
         
 
 
@@ -64,6 +69,8 @@ google-analytics:
     
 format:
   html:
+    filters:
+      - scripts/home-news.lua
     theme: cosmo
     css: styles.css
     toc: true

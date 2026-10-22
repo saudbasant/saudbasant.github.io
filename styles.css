@@ -3244,3 +3244,167 @@ details[open] .mfaq-q::after { content: "−"; }
   object-fit: contain;
   mix-blend-mode: multiply;
 }
+
+
+
+
+
+
+
+/* ── News Archive: Compact Horizontal Cards ── */
+
+#listing-news-listing {
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+#listing-news-listing .quarto-post {
+  display: grid !important;
+  grid-template-columns: 150px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "thumbnail metadata"
+    "thumbnail body";
+  align-items: start;
+  column-gap: 16px;
+  row-gap: 4px;
+  padding: 14px;
+  margin: 0 0 12px;
+  border: 1px solid var(--bs-border-color, #ddd);
+  border-radius: 16px;
+  background: var(--bs-body-bg, #fff);
+}
+
+/* Image on the left */
+#listing-news-listing .quarto-post .thumbnail {
+  grid-area: thumbnail !important;
+  width: 150px !important;
+  max-width: 150px !important;
+  margin: 0 !important;
+  float: none !important;
+  align-self: start;
+}
+
+#listing-news-listing .quarto-post .thumbnail img {
+  display: block;
+  width: 150px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Date above the title */
+#listing-news-listing .quarto-post .metadata {
+  grid-area: metadata !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  align-self: end;
+}
+
+#listing-news-listing .quarto-post .listing-date {
+  display: block;
+  margin: 0 0 4px !important;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--bs-secondary-color, #777);
+}
+
+/* Title and description */
+#listing-news-listing .quarto-post .body {
+  grid-area: body !important;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#listing-news-listing .quarto-post .listing-title {
+  margin: 0 0 5px !important;
+  font-size: 1.15rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+#listing-news-listing .quarto-post .listing-title a {
+  text-decoration: none;
+}
+
+#listing-news-listing .quarto-post .listing-description {
+  margin: 0 !important;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+  #listing-news-listing .quarto-post {
+    grid-template-columns: 95px minmax(0, 1fr);
+    column-gap: 11px;
+    padding: 10px;
+  }
+
+  #listing-news-listing .quarto-post .thumbnail,
+  #listing-news-listing .quarto-post .thumbnail img {
+    width: 95px !important;
+    max-width: 95px !important;
+  }
+
+  #listing-news-listing .quarto-post .thumbnail img {
+    height: 85px;
+  }
+
+  #listing-news-listing .quarto-post .listing-title {
+    font-size: 1rem;
+  }
+}
+
+
+
+
+
+
+
+/* Homepage News Highlights */
+.home-news-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+  line-height: 1.5;
+}
+
+.home-news-date {
+  display: inline-block !important;
+  flex: 0 0 auto !important;
+  padding: 2px 7px !important;
+  background-color: #ead5ee !important;
+  color: #222 !important;
+  border-radius: 4px !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+
+.home-news-title {
+  display: inline-block !important;
+  min-width: 0;
+  text-decoration: none !important;
+}
+
+
+
+
+
+/* Remove underlines from links across the website */
+a {
+  text-decoration: none !important;
+}
+
+/* Optional: show underlines when hovering over links */
+a:hover {
+  text-decoration: underline !important;
+}
+
+
+
+
+

@@ -29,6 +29,12 @@
     "items": []
   },
   {
+    "listing": "/news/index.html",
+    "items": [
+      "/news/posts/2026-newspaper-feature.html"
+    ]
+  },
+  {
     "listing": "/publications/index.html",
     "items": []
   }

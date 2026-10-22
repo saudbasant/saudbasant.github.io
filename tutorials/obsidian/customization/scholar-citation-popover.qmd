@@ -33,7 +33,7 @@ The exact buttons and available information depend on the citation, the plugins,
 ## How the components work together
 
 | Component | Purpose |
-|------------------------------------|------------------------------------|
+|----|----|
 | Obsidian | Provides the research-note and PDF-reading environment. |
 | PDF++ | Adds PDF annotation, internal-link handling, and citation-popover functionality. |
 | Modified PDF++ branch | Adds the experimental citation integration and Google Scholar popover option used in this tutorial. |

@@ -1,0 +1,17 @@
+---
+title: "**Newspaper Feature in National Daily**"
+date: "2026-09-13"
+description: "My academic and research journey featured in the Bangladeshi newspaper *Agamir Somoy*"
+categories: ["Media Coverage"]
+image: "/files/images/news/2026-newspaper-feature.jpg"
+---
+
+My research journey was featured in the Bangladeshi newspaper *Agamir Somoy* on 13 September 2026.
+
+The feature, titled **From University to the World Stage**, highlights my academic and research journey, my work in veterinary virology, and my participation in an international conference organized by the World Food Forum and the Food and Agriculture Organization of the United Nations (FAO) in Rome, Italy.
+
+[Read the original e-paper article](https://www.agamirsomoy.com/epaper?pub=news-paper&date=2026-09-13&rev=1&page=9&region=17428).
+
+
+![Newspaper feature highlighting my research journey. Source: Agamir Somoy, 13 September 2026.](../../files/images/news/2026-newspaper-feature.jpg)
+

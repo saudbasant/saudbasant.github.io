@@ -1,6 +1,6 @@
 ---
 title: "Basant Saud"
-subtitle: "Researcher | Veterianrian"
+subtitle: "DVM | MS | Research Assistant"
 description-meta: "Quarto Academic Website for Basant"
 image: files/profiles/basant1.webp
 page-layout: full
@@ -39,5 +39,18 @@ about:
 I am Basant Saud, an **Animal Science and Veterinary Medicine** graduate with MS in **Veterinary Pathology**. Currently, I am a Research Assistant in the the lab of [Amina Khatun, PhD,](https://sau.edu.bd/teacher/261){target="_blank"} [Department of Pathology](https://sau.edu.bd/department/pathology){target="_blank"}, [Sher-e-Bangla Agricultural University](https://sau.edu.bd/){target="_blank"}, Bangladesh.
 
 My research interests are Virology, Immunology, Epidemiology, Multiomics, Zoonoses and One health.
+
+
+### News
+
+
+::: {#home-news-listing}
+:::
+
+
+<div class="view-all-news">
+  <a href="news/">View all news →</a>
+</div>
+
 
 :::

@@ -1,0 +1,15 @@
+---
+title: "News"
+page-layout: full
+
+listing:
+  id: news-listing
+  contents: "posts/*.qmd"
+  sort: "date desc"
+  type: default
+  fields: [date, title, description, image]
+  page-size: 12
+  categories: false
+  sort-ui: false
+  filter-ui: false
+---
