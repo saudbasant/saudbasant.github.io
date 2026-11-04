@@ -26,15 +26,18 @@ website:
       - href: index.qmd
         text: Home
         
-      - href: about/index.qmd
-        text: About
+      - href: education/index.qmd
+        text: Education
             
       - href: projects/index.qmd
         text: Projects
         
       - href: publications/index.qmd
         text: Publications
-
+        
+      - href: honors/index.qmd
+        text: Honors       
+        
       - href: news/index.qmd
         text: News
         

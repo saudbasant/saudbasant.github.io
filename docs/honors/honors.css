@@ -1,0 +1,75 @@
+
+/* Overall honors layout */
+
+.honor-entry {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  column-gap: 28px;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+/* Year column */
+
+.honor-year {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+  padding-top: 3px;
+  text-align: left;
+}
+
+/* Award details column */
+
+.honor-content {
+  padding-left: 28px;
+  border-left: 2px solid var(--bs-border-color);
+}
+
+.honor-content h3 {
+  font-size: 1.3rem;
+  font-weight: 650;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border: none;
+}
+
+.honor-content p {
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.honor-content strong {
+  font-weight: 650;
+}
+
+.honor-content a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.honor-content a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile layout */
+
+@media (max-width: 600px) {
+  .honor-entry {
+    grid-template-columns: 65px minmax(0, 1fr);
+    column-gap: 12px;
+    padding: 22px 0;
+  }
+
+  .honor-year {
+    font-size: 1.1rem;
+  }
+
+  .honor-content {
+    padding-left: 15px;
+  }
+
+  .honor-content h3 {
+    font-size: 1.1rem;
+  }
+}

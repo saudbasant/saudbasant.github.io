@@ -1,0 +1,40 @@
+---
+title: "Honors"
+description: "Academic awards, research funding, scholarships, and professional recognitions."
+toc: false
+css: honors.css
+---
+
+<div class="honor-entry">
+
+<div class="honor-year">2024</div>
+
+<div class="honor-content">
+
+### Winner, Transformative Research Challenge 2024
+
+**World Food Forum, FAO**
+
+Recognized as a winner of the international Transformative Research Challenge 2024, held in Rome, Italy.
+
+[<i class="bi bi-award"></i> View Certificate](YOUR-CERTIFICATE-LINK)
+
+</div>
+</div>
+
+<div class="honor-entry">
+
+<div class="honor-year">2023</div>
+
+<div class="honor-content">
+
+### Dean's Award for Academic Excellence
+
+**Sher-e-Bangla Agricultural University**
+
+Awarded in recognition of outstanding academic performance.
+
+[<i class="bi bi-award"></i> View Certificate](YOUR-CERTIFICATE-LINK)
+
+</div>
+</div>

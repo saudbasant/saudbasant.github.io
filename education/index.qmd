@@ -1,7 +1,4 @@
 ---
-title: "About"
-subtitle: "Research Assistant, Veterinarian"
-title-block-banner: true
 page-layout: full
 toc: false
 listing:
