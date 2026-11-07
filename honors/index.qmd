@@ -9,7 +9,7 @@ css: honors.css
 
 <div class="honor-year">2024</div>
 
-<div class="honor-content">
+<div class="honor-card">
 
 ### Winner, Transformative Research Challenge 2024
 
@@ -26,7 +26,7 @@ Recognized as a winner of the international Transformative Research Challenge 20
 
 <div class="honor-year">2023</div>
 
-<div class="honor-content">
+<div class="honor-card">
 
 ### Dean's Award for Academic Excellence
 

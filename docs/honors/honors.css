@@ -1,75 +1,128 @@
+/* Honors page title */
+#title-block-header .title {
+  font-size: 1rem;
+  font-weight: 700;
+}
 
-/* Overall honors layout */
+/* Honors page subtitle */
+#title-block-header .description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* =================================
+   HONORS PAGE LAYOUT
+================================= */
 
 .honor-entry {
-  display: grid;
-  grid-template-columns: 100px minmax(0, 1fr);
-  column-gap: 28px;
-  padding: 30px 0;
-  border-bottom: 1px solid var(--bs-border-color);
+  display: grid !important;
+  grid-template-columns: 70px minmax(0, 1fr);
+  column-gap: 18px;
+  align-items: start;
+  margin: 20px 0;
 }
 
 /* Year column */
 
 .honor-year {
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--bs-primary);
-  padding-top: 3px;
   text-align: left;
+  padding-top: 18px;
+  white-space: nowrap;
 }
 
-/* Award details column */
+/* =================================
+   HONOR CARD
+================================= */
 
-.honor-content {
-  padding-left: 28px;
-  border-left: 2px solid var(--bs-border-color);
+.honor-card {
+  padding: 18px 24px;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 10px;
+  background: var(--bs-body-bg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.025);
+  transition: border-color 0.2s ease,
+              box-shadow 0.2s ease;
 }
 
-.honor-content h3 {
-  font-size: 1.3rem;
+.honor-card:hover {
+  border-color: var(--bs-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* =================================
+   TYPOGRAPHY AND SPACING
+================================= */
+
+/* Award title */
+
+.honor-card h3 {
+  font-size: 0.85rem;
   font-weight: 650;
-  margin-top: 0;
-  margin-bottom: 10px;
+  line-height: 1.2;
+  margin: 0 0 7px 0;
   border: none;
 }
 
-.honor-content p {
-  line-height: 1.7;
-  margin-bottom: 12px;
+/* All paragraphs */
+
+.honor-card p {
+  font-size: 0.7rem;
+  line-height: 1.2;
+  margin: 5px 0;
 }
 
-.honor-content strong {
-  font-weight: 650;
+/* Organisation */
+
+.honor-card h3 + p {
+  margin-top: 0;
+  margin-bottom: 7px;
 }
 
-.honor-content a {
-  text-decoration: none;
+/* Certificate link */
+
+.honor-card p:last-child {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+.honor-card a {
   font-weight: 600;
+  text-decoration: none;
 }
 
-.honor-content a:hover {
+.honor-card a:hover {
   text-decoration: underline;
 }
 
-/* Mobile layout */
+/* =================================
+   MOBILE RESPONSIVENESS
+================================= */
 
 @media (max-width: 600px) {
+
   .honor-entry {
-    grid-template-columns: 65px minmax(0, 1fr);
-    column-gap: 12px;
-    padding: 22px 0;
+    grid-template-columns: 52px minmax(0, 1fr);
+    column-gap: 10px;
+    margin: 16px 0;
   }
 
   .honor-year {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    padding-top: 16px;
   }
 
-  .honor-content {
-    padding-left: 15px;
+  .honor-card {
+    padding: 15px 16px;
   }
 
-  .honor-content h3 {
-    font-size: 1.1rem;
+  .honor-card h3 {
+    font-size: 1.05rem;
+  }
+
+  .honor-card p {
+    font-size: 0.92rem;
   }
 }
