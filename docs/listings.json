@@ -19,8 +19,11 @@
     ]
   },
   {
-    "listing": "/education/index.html",
-    "items": []
+    "listing": "/news/index.html",
+    "items": [
+      "/news/posts/2026-11-12-paper-accepted.html",
+      "/news/posts/2026-newspaper-feature.html"
+    ]
   },
   {
     "listing": "/blog/index.html",
@@ -29,10 +32,8 @@
     ]
   },
   {
-    "listing": "/news/index.html",
-    "items": [
-      "/news/posts/2026-newspaper-feature.html"
-    ]
+    "listing": "/education/index.html",
+    "items": []
   },
   {
     "listing": "/publications/index.html",
